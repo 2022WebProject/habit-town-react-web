@@ -4,11 +4,22 @@ import styled from "styled-components";
 import { ReactComponent as IcHome } from "images/svgs/IcHome.svg";
 import InputSearch from "components/inputs/InputSearch";
 import ButtonM from "components/buttons/ButtonM";
+import { useNavigate } from "react-router-dom";
 
 const NavTop = () => {
+  const navigate = useNavigate();
+  const goLoginPage = () => {
+    navigate("/login");
+  };
+  const goSignupPage = () => {
+    navigate("/signup");
+  };
+  const goHomePage = () => {
+    navigate("/");
+  };
   return (
     <Container>
-      <NavContainer style={{ cursor: "pointer" }}>
+      <NavContainer onClick={goHomePage} style={{ cursor: "pointer" }}>
         <IcHome />
       </NavContainer>
       <NavContainer>
@@ -16,8 +27,8 @@ const NavTop = () => {
       </NavContainer>
       <NavContainer style={{ justifyContent: "flex-end" }}>
         <ProfileContainer>
-          <ButtonM line text={"Sign In"} />
-          <ButtonM text={"Sign Up"} />
+          <ButtonM onClick={goLoginPage} txtBtn text={"Log In"} />
+          <ButtonM onClick={goSignupPage} text={"Sign Up"} />
         </ProfileContainer>
       </NavContainer>
     </Container>

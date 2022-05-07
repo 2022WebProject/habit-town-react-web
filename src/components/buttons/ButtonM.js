@@ -1,9 +1,22 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-const ButtonM = ({ onClick, text, bold = false, line = false }) => {
+const ButtonM = ({
+  onClick,
+  text,
+  bold = false,
+  line = false,
+  txtBtn = false,
+  style,
+}) => {
   return (
-    <Container line={line} bold={bold} onClick={onClick && onClick}>
+    <Container
+      style={style}
+      txtBtn={txtBtn}
+      bold={bold}
+      line={line}
+      onClick={onClick && onClick}
+    >
       {text}
     </Container>
   );
@@ -13,8 +26,6 @@ export default ButtonM;
 
 const Container = styled.div`
   background: #22c55e;
-  box-shadow: 0px 1px 3px rgba(42, 51, 66, 0.06),
-    0px 1px 2px rgba(42, 51, 66, 0.03);
   border-radius: 6px;
   display: flex;
   flex-direction: row;
@@ -28,6 +39,7 @@ const Container = styled.div`
 
   /* additional Style */
   ${(props) => props.bold && bold}
+  ${(props) => props.txtBtn && txtBtn}
   ${(props) => props.line && line}
 `;
 
@@ -35,8 +47,13 @@ const bold = css`
   font-weight: 700;
 `;
 
-const line = css`
+const txtBtn = css`
   background-color: transparent;
   color: #556987;
-  box-shadow: none;
+`;
+
+const line = css`
+  background-color: white;
+  border: 1px solid #22c55e;
+  color: #22c55e;
 `;

@@ -1,7 +1,7 @@
 import ButtonM from "components/buttons/ButtonM";
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Checkbox } from "images/svgs/Checkbox.svg";
+import { ReactComponent as Checkbox } from "images/svgs/IcCheckboxWhite.svg";
 
 const tempList = [
   { title: "1단계 습관" },
@@ -9,7 +9,7 @@ const tempList = [
   { title: "3단계 습관" },
 ];
 
-const CardHabit = ({ lists = tempList, onClick }) => {
+const CardHabitMy = ({ lists = tempList, onClick }) => {
   return (
     <Container>
       <LineContainer>
@@ -23,16 +23,21 @@ const CardHabit = ({ lists = tempList, onClick }) => {
         })}
       </LineContainer>
       <ButtonWrapper>
-        <ButtonM bold onClick={onClick && onClick} text="참여하기" />
+        <ButtonM
+          bold
+          line
+          onClick={onClick && onClick}
+          text="친구들 진척도 보러 가기"
+        />
       </ButtonWrapper>
     </Container>
   );
 };
 
-export default CardHabit;
+export default CardHabitMy;
 
 const Container = styled.div`
-  background: #f7f8f9;
+  background: #22c55e;
   box-shadow: 0px 1px 2px rgba(85, 105, 135, 0.1);
   border-radius: 6px;
   padding: 40px 32px;
@@ -55,5 +60,5 @@ const HabitText = styled.div`
   font-size: 16px;
   line-height: 24px;
   margin-left: 12px;
-  color: #556987;
+  color: white;
 `;
