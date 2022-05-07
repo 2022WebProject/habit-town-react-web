@@ -2,16 +2,24 @@ import React from "react";
 import styled from "styled-components";
 
 import { ReactComponent as IcHome } from "images/svgs/IcHome.svg";
+import InputSearch from "components/inputs/InputSearch";
+import ButtonM from "components/buttons/ButtonM";
 
 const NavTop = () => {
   return (
     <Container>
-      <IcHome />
-      <div>검색</div>
-      <ProfileContainer>
-        <div>Log in</div>
-        <div>Sign up</div>
-      </ProfileContainer>
+      <NavContainer style={{ cursor: "pointer" }}>
+        <IcHome />
+      </NavContainer>
+      <NavContainer>
+        <InputSearch />
+      </NavContainer>
+      <NavContainer style={{ justifyContent: "flex-end" }}>
+        <ProfileContainer>
+          <ButtonM line text={"Sign In"} />
+          <ButtonM text={"Sign Up"} />
+        </ProfileContainer>
+      </NavContainer>
     </Container>
   );
 };
@@ -28,14 +36,21 @@ const Container = styled.div`
   border-bottom: 1px solid #e6e6e6;
   box-shadow: 0px 1px 2px rgba(85, 105, 135, 0.1);
 
-  &:hover {
-    cursor: pointer;
-  }
+  position: fixed;
+  top: 0px;
+  z-index: 10;
+  background-color: white;
 `;
 
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px 0px;
+  justify-content: flex-end;
+  gap: 0px 8px;
+`;
+
+const NavContainer = styled.div`
+  display: flex;
+  flex: 1;
 `;

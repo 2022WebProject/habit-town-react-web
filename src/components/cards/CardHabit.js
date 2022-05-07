@@ -19,7 +19,7 @@ const CardHabit = ({ lists = tempList, onClick }) => {
         })}
       </LineContainer>
       <ButtonWrapper>
-        <ButtonM onClick={onClick && onClick} text="참여하기" />
+        <ButtonM bold onClick={onClick && onClick} text="참여하기" />
       </ButtonWrapper>
     </Container>
   );
