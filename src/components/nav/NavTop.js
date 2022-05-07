@@ -5,9 +5,15 @@ import { ReactComponent as IcHome } from "images/svgs/IcHome.svg";
 import InputSearch from "components/inputs/InputSearch";
 import ButtonM from "components/buttons/ButtonM";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userTokenAtom } from "store/atom/userAtom";
+import userPng from "images/pngs/user.png";
 
 const NavTop = () => {
   const navigate = useNavigate();
+
+  const [token] = useRecoilState(userTokenAtom);
+
   const goLoginPage = () => {
     navigate("/login");
   };
@@ -17,6 +23,10 @@ const NavTop = () => {
   const goHomePage = () => {
     navigate("/");
   };
+  const goMyPage = () => {
+    navigate("/mypage");
+  };
+
   return (
     <Container>
       <NavContainer onClick={goHomePage} style={{ cursor: "pointer" }}>
@@ -27,8 +37,14 @@ const NavTop = () => {
       </NavContainer>
       <NavContainer style={{ justifyContent: "flex-end" }}>
         <ProfileContainer>
-          <ButtonM onClick={goLoginPage} txtBtn text={"Log In"} />
-          <ButtonM onClick={goSignupPage} text={"Sign Up"} />
+          {token ? (
+            <ProfileImage onClick={goMyPage} src={userPng} />
+          ) : (
+            <>
+              <ButtonM onClick={goLoginPage} txtBtn text={"Log In"} />
+              <ButtonM onClick={goSignupPage} text={"Sign Up"} />
+            </>
+          )}
         </ProfileContainer>
       </NavContainer>
     </Container>
@@ -64,4 +80,12 @@ const ProfileContainer = styled.div`
 const NavContainer = styled.div`
   display: flex;
   flex: 1;
+`;
+
+const ProfileImage = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 8px;
+  cursor: pointer;
 `;

@@ -22,9 +22,18 @@ const Home = () => {
       <Row>
         <Col span={3} xs={1} sm={2} md={3} lg={3} xxl={5}></Col>
         <Col span={14} xs={22} sm={20} md={18} lg={18} xxl={14}>
-          {/* <MoreButtonContainer>
-            <ButtonM bold line text={"+ 내 습관 더 추가하러 가기"} />
-          </MoreButtonContainer> */}
+          <MoreButtonContainer>
+            <ButtonM
+              style={{
+                borderRadius: 30,
+                padding: "8px 16px",
+                marginBottom: 32,
+              }}
+              bold
+              line
+              text={"+ 내 습관 더 추가하러 가기"}
+            />
+          </MoreButtonContainer>
           <Row gutter={[40, 40]}>
             <CardContainer my />
             <CardContainer my />
