@@ -69,6 +69,7 @@ const CardHabitBig = ({ lists = tempList, onClick }) => {
           );
         })}
       </LineContainer>
+
       <CalendarWrapper>
         {status.map((item) => {
           return <ColorCard state={item.state} />;
@@ -101,6 +102,14 @@ const CalendarWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  /* max-width: 217px; */
+  align-items: center;
+`;
+
+const CalendarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const HabitText = styled.div`

@@ -2,6 +2,7 @@ import ButtonM from "components/buttons/ButtonM";
 import React from "react";
 import styled from "styled-components";
 import { ReactComponent as Checkbox } from "images/svgs/IcCheckboxWhite.svg";
+import { Modal } from "antd";
 
 const tempList = [
   { title: "1단계 습관" },
