@@ -5,7 +5,7 @@ const questRouter = express.Router();
 
 questRouter.post("/", questController.create);
 questRouter.get("/", questController.read);
-questRouter.post("/:id", questController.readDetail);
+questRouter.get("/:id", questController.readDetail);
 questRouter.post("/accept/:id", questController.accept);
 
 export default questRouter;

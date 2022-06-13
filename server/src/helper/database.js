@@ -20,3 +20,11 @@ export async function connectDB() {
     useUnifiedTopology: true,
   });
 }
+
+export function useVirtualId(Schema) {
+  Schema.virtual("id").get(function () {
+    return this._id.toString();
+  });
+  Schema.set("toJSON", { virtuals: true });
+  Schema.set("toObject", { virtuals: true });
+}

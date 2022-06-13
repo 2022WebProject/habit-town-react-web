@@ -1,18 +1,23 @@
 import mongoose from "mongoose";
-import { sqHelper, SQ_Datatypes } from "../helper/database.js";
+import { sqHelper, SQ_Datatypes, useVirtualId } from "../helper/database.js";
 
-export const User = mongoose.Schema({
+const UserSchema = mongoose.Schema({
   // id: { type: String, required: true },
+  email: { type: String, required: true },
   nickname: { type: String, required: true },
   password: { type: String, required: true },
   introduce: String,
-  login_type: String,
-  accepted_quest_id: String,
+  accepted_quests: [
+    {
+      quiest_id: { type: Number, required: true },
+      success_count: { type: Number, required: true },
+      memo: { type: String, required: false },
+    },
+  ],
 });
-User.virtual("id").get(function () {
-  return this._id.toString();
-});
-User.set("toJSON", { virtuals: true });
+useVirtualId(UserSchema);
+
+const User = mongoose.model("User", UserSchema);
 
 // export const User = sqHelper.define("user", {
 //   id: {
