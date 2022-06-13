@@ -6,13 +6,13 @@ import InputSearch from "components/inputs/InputSearch";
 import ButtonM from "components/buttons/ButtonM";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { userTokenAtom } from "store/atom/userAtom";
+import { userAtom, userTokenAtom } from "store/atom/userAtom";
 import userPng from "images/pngs/user.png";
 
 const NavTop = () => {
   const navigate = useNavigate();
 
-  const [token] = useRecoilState(userTokenAtom);
+  const [user, setUser] = useRecoilState(userAtom);
 
   const goLoginPage = () => {
     navigate("/login");
@@ -27,6 +27,11 @@ const NavTop = () => {
     navigate("/mypage");
   };
 
+  const Logout = () => {
+    setUser(null);
+    navigate("/");
+  };
+
   return (
     <Container>
       <NavContainer onClick={goHomePage} style={{ cursor: "pointer" }}>
@@ -37,8 +42,11 @@ const NavTop = () => {
       </NavContainer>
       <NavContainer style={{ justifyContent: "flex-end" }}>
         <ProfileContainer>
-          {token ? (
-            <ProfileImage onClick={goMyPage} src={userPng} />
+          {user ? (
+            <>
+              <ButtonM onClick={Logout} txtBtn text={"Log Out"} />
+              <ProfileImage onClick={goMyPage} src={userPng} />
+            </>
           ) : (
             <>
               <ButtonM onClick={goLoginPage} txtBtn text={"Log In"} />

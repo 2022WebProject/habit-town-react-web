@@ -1,24 +1,68 @@
+import { signupRequest } from "apis/userApi";
 import { ButtonM, InputM } from "components";
 import colors from "helpers/colors";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { useRecoilState } from "recoil";
+import { userAtom } from "store/atom/userAtom";
 import styled from "styled-components";
 
 const SignupPage = () => {
   const navigate = useNavigate();
+  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [user, setUser] = useRecoilState(userAtom);
+
+  const handleNickname = (e) => {
+    setNickname(e.target.value);
+  };
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
   const goLoginPage = () => {
     navigate("/login");
   };
+
+  const postUserSignup = async () => {
+    const signUpRequestException = (e) => {
+      alert(e.response?.data?.message);
+    };
+    const result = await signupRequest(
+      nickname,
+      email,
+      password,
+      signUpRequestException
+    );
+    return result;
+  };
+
+  const onCLickSignupButton = async () => {
+    const result = await postUserSignup();
+    console.log(result);
+    setUser(result);
+    navigate("/");
+  };
+
   return (
     <Body>
       <Container>
         <TitleText>함께해요!</TitleText>
-        <InputM title="이름*" />
+        <InputM title="이름*" value={nickname} onChange={handleNickname} />
         <div style={{ height: 24 }} />
-        <InputM title="이메일*" />
+        <InputM title="이메일*" value={email} onChange={handleEmail} />
         <div style={{ height: 24 }} />
-        <InputM title="비밀번호*" />
-        <ButtonM style={{ width: "100%", marginTop: 24 }} text="로그인" />
+        <InputM title="비밀번호*" value={password} onChange={handlePassword} />
+        <ButtonM
+          onClick={onCLickSignupButton}
+          style={{ width: "100%", marginTop: 24 }}
+          text="회원가입"
+        />
         <TextMd>
           이미 계정이 있나요?{" "}
           <span

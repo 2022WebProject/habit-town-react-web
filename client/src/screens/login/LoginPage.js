@@ -1,22 +1,43 @@
+import { loginRequest, signupRequest } from "apis/userApi";
 import { ButtonM, InputM } from "components";
 import colors from "helpers/colors";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
-import { userTokenAtom } from "store/atom/userAtom";
+import { userAtom, userTokenAtom } from "store/atom/userAtom";
 import styled from "styled-components";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  const [token, setToken] = useRecoilState(userTokenAtom);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useRecoilState(userAtom);
+
+  const handleEmail = (e) => {
+    console.log(e.target.value);
+    setEmail(e.target.value);
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
 
   const goSignupPage = () => {
     navigate("/signup");
   };
 
-  const onClickLoginButton = () => {
-    setToken("token");
+  const postUserLogin = async () => {
+    const loginRequestException = (e) => {
+      alert(e.response?.data?.message);
+    };
+    const result = await loginRequest(email, password, loginRequestException);
+    return result;
+  };
+  const onClickLoginButton = async () => {
+    const result = await postUserLogin();
+    console.log(result);
+
+    setUser(result);
     navigate("/");
   };
 
@@ -25,9 +46,9 @@ const LoginPage = () => {
       <Container>
         <TitleText>들어오세요!</TitleText>
         <SubTitleText>습관을 3단계로 쪼개기</SubTitleText>
-        <InputM title="이메일" />
+        <InputM title="이메일" value={email} onChange={handleEmail} />
         <div style={{ height: 24 }} />
-        <InputM title="비밀번호" />
+        <InputM title="비밀번호" value={password} onChange={handlePassword} />
         <ButtonM
           style={{ width: "100%", marginTop: 24 }}
           onClick={onClickLoginButton}
