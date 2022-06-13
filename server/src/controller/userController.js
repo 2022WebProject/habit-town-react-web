@@ -41,7 +41,7 @@ export const signup = async (req, res, next) => {
   const token = createJwtToken(userId);
   //   console.log("user", user);
 
-  return res.status(201).json({ token, nickname: user.nickname, id: userId });
+  return res.status(201).json({ token, nickname, id: userId });
 };
 export const withdraw = (req, res, next) => {};
 
