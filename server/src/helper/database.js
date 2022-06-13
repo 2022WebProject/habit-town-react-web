@@ -1,5 +1,7 @@
 import SQ from "sequelize";
 import { config } from "./envconfig.js";
+import MongoDB from "mongodb";
+import Mongoose from "mongoose";
 
 const { host, user, database, password } = config.db;
 
@@ -11,3 +13,10 @@ export const sqHelper = new SQ.Sequelize(database, user, password, {
   dialect: "mysql",
   //   logging: false,
 });
+
+export async function connectDB() {
+  return Mongoose.connect(config.db.host, {
+    useNewURlParser: true,
+    useUnifiedTopology: true,
+  });
+}

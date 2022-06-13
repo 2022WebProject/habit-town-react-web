@@ -6,7 +6,7 @@ import "express-async-errors";
 import { config } from "./helper/envconfig.js";
 import userRouter from "./router/userRouter.js";
 import questRouter from "./router/QuestRouter.js";
-import { sqHelper } from "./helper/database.js";
+import { connectDB, sqHelper } from "./helper/database.js";
 
 import "./helper/relation.js";
 
@@ -20,6 +20,13 @@ app.use(morgan("common"));
 app.use("/user", userRouter);
 app.use("/quest", questRouter);
 
-sqHelper.sync().then((client) => {
-  app.listen(config.host.port);
-});
+connectDB()
+  .then((db) => {
+    console.log("init!!");
+    app.listen(config.host.port);
+  })
+  .catch(console.error);
+
+// sqHelper.sync().then((client) => {
+
+// });

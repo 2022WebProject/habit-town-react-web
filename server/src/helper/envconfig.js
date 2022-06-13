@@ -23,8 +23,8 @@ export const config = {
   },
   db: {
     host: findEnv("DB_HOST"),
-    user: findEnv("DB_USER"),
-    database: findEnv("DB_DATABASE"),
-    password: findEnv("DB_PASSWORD"),
+    // user: findEnv("DB_USER"),
+    // database: findEnv("DB_DATABASE"),
+    // password: findEnv("DB_PASSWORD"),
   },
 };
