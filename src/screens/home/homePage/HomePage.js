@@ -41,7 +41,13 @@ const Home = () => {
   };
 
   const onClickAccept = async (id) => {
-    const result = await requestQuestAccept(id);
+    const acceptException = (e) => {
+      if (e?.response?.status == 401) {
+        alert("습관 구독은 로그인이 필요해요.");
+        navigate("/login");
+      }
+    };
+    const result = await requestQuestAccept(id, acceptException);
     console.log(result);
     alert(result.message);
     // console.log(result.message);
