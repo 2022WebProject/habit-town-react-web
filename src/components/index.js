@@ -14,6 +14,7 @@ import InputM from "./inputs/InputM";
 
 // Modals
 import ModalHabitMore from "./modals/ModalHabitMore";
+import ModalHabitNew from "./modals/ModalHabitNew";
 
 // Nav
 import NavTop from "./nav/NavTop";
@@ -27,4 +28,5 @@ export {
   InputM,
   CardHabitBig,
   ModalHabitMore,
+  ModalHabitNew,
 };

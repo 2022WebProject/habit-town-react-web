@@ -3,7 +3,7 @@ import CardHabit from "components/cards/CardHabit";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CardContainer from "./components/CardContainer";
-import { ButtonM, ModalHabitMore } from "components/index";
+import { ButtonM, ModalHabitMore, ModalHabitNew } from "components/index";
 import styled from "styled-components";
 import {
   requestAllQuests,
@@ -14,6 +14,7 @@ import {
 const Home = () => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
+  const [visibleNew, setVisibleNew] = useState(false);
 
   const [user, setUser] = useState();
   const [quest, setQuest] = useState([]);
@@ -67,6 +68,7 @@ const Home = () => {
         <Col span={14} xs={22} sm={20} md={18} lg={18} xxl={14}>
           <MoreButtonContainer>
             <ButtonM
+              onClick={()=> setVisibleNew(true)}
               style={{
                 borderRadius: 30,
                 padding: "8px 16px",
@@ -76,6 +78,7 @@ const Home = () => {
               line
               text={"+ 내 습관 더 추가하러 가기"}
             />
+            <ModalHabitNew visible={visibleNew} onExit={() => setVisibleNew(false)} />
           </MoreButtonContainer>
           <Row gutter={[40, 40]}>
             {user?.accepted_quests?.map((item) => {
