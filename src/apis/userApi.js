@@ -49,3 +49,13 @@ export const requestQuestAccept = async (quest_id, exceptionControl) => {
     throw e;
   }
 };
+
+export const requestAllQuests = async (exceptionControl) => {
+  try {
+    const result = await getRequest(`/quest`);
+    return result;
+  } catch (e) {
+    if (exceptionControl) exceptionControl(e);
+    throw e;
+  }
+};
