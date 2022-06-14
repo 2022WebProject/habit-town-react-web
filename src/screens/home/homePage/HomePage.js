@@ -29,6 +29,10 @@ const Home = () => {
     navigate("/search");
   };
 
+  const onRefresh = () => {
+    getAllQuest();
+  };
+
   const getUserInfo = async () => {
     const result = await requestUesrInfo();
     console.log(result);
@@ -46,6 +50,8 @@ const Home = () => {
       if (e?.response?.status == 401) {
         alert("습관 구독은 로그인이 필요해요.");
         navigate("/login");
+      } else {
+        alert(e?.response?.data?.message);
       }
     };
     const result = await requestQuestAccept(id, acceptException);
@@ -68,7 +74,7 @@ const Home = () => {
         <Col span={14} xs={22} sm={20} md={18} lg={18} xxl={14}>
           <MoreButtonContainer>
             <ButtonM
-              onClick={()=> setVisibleNew(true)}
+              onClick={() => setVisibleNew(true)}
               style={{
                 borderRadius: 30,
                 padding: "8px 16px",
@@ -78,7 +84,11 @@ const Home = () => {
               line
               text={"+ 내 습관 더 추가하러 가기"}
             />
-            <ModalHabitNew visible={visibleNew} onExit={() => setVisibleNew(false)} />
+            <ModalHabitNew
+              visible={visibleNew}
+              onExit={() => setVisibleNew(false)}
+              refresh={onRefresh}
+            />
           </MoreButtonContainer>
           <Row gutter={[40, 40]}>
             {user?.accepted_quests?.map((item) => {
