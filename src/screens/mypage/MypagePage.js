@@ -5,7 +5,7 @@ import styled from "styled-components";
 import userPng from "images/pngs/user.png";
 import badgePng from "images/pngs/IcBadge.png";
 import { CardHabitBig } from "components";
-import { requestUesrInfo } from "apis/userApi";
+import { requestQuestAccept, requestUesrInfo } from "apis/userApi";
 
 const MypagePage = () => {
   const navigate = useNavigate();
@@ -16,6 +16,14 @@ const MypagePage = () => {
     const result = await requestUesrInfo();
     console.log(result);
     setUser(result);
+  };
+
+  const postQuitQuest = async (id) => {
+    console.log(id);
+    const result = await requestQuestAccept(id);
+    console.log(result);
+    alert("퀘스트를 때려치웠습니다.");
+    getUserInfo();
   };
 
   useEffect(() => {
@@ -45,7 +53,10 @@ const MypagePage = () => {
           {user?.accepted_quests?.map((item) => {
             return (
               <Col span={8}>
-                <CardHabitBig lists={item.sub_quests} />
+                <CardHabitBig
+                  onClickQuit={() => postQuitQuest(item._id)}
+                  lists={item.sub_quests}
+                />
               </Col>
             );
           })}

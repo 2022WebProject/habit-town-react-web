@@ -40,3 +40,12 @@ export const requestUesrInfo = async (exceptionControl) => {
 };
 
 // 임시로 questAPI를 여기다가 적습니다..
+export const requestQuestAccept = async (quest_id, exceptionControl) => {
+  try {
+    const result = await postRequest(`/quest/accept/`, { quest_id });
+    return result;
+  } catch (e) {
+    if (exceptionControl) exceptionControl(e);
+    throw e;
+  }
+};

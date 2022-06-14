@@ -13,8 +13,27 @@ const tempList = [
   { title: "3단계 습관" },
 ];
 
-const CardHabitBig = ({ lists = tempList, onClick }) => {
+const CardHabitBig = ({ lists = tempList, onClick, onClickQuit }) => {
   const [status, setStatus] = useState([]);
+  const menu = (
+    <Menu
+      items={[
+        {
+          label: <a>때려치우기</a>,
+          key: "0",
+          onClick: onClickQuit,
+        },
+        // {
+        //   label: <a>공유하기</a>,
+        //   key: "1",
+        // },
+        // {
+        //   label: <a>남 구경하기</a>,
+        //   key: "2",
+        // },
+      ]}
+    />
+  );
 
   useEffect(() => {
     let tempStatus = [];
@@ -32,25 +51,6 @@ const CardHabitBig = ({ lists = tempList, onClick }) => {
     }
     setStatus(tempStatus);
   }, []);
-
-  const menu = (
-    <Menu
-      items={[
-        {
-          label: <a>때려치우기</a>,
-          key: "0",
-        },
-        {
-          label: <a>공유하기</a>,
-          key: "1",
-        },
-        {
-          label: <a>남 구경하기</a>,
-          key: "2",
-        },
-      ]}
-    />
-  );
 
   return (
     <Container>
