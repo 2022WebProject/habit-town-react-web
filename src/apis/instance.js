@@ -1,4 +1,6 @@
 import axios from "axios";
+import { getRecoil } from "recoil-nexus";
+import { userAtom } from "store/atom/userAtom";
 // import { getRecoil, setRecoil } from "recoil-nexus";
 // import { UserIdAtom } from "store/atom/auth";
 import { ROOT_URL } from "./url";
@@ -29,9 +31,10 @@ export const instance = () => {
   instance.interceptors.request.use(
     function (config) {
       // 요청 바로 직전
-      // const token = getRecoil(UserIdAtom);
-      // if (token.token)
-      //   config.headers["Authorization"] = "Bearer " + token.token.accessToken;
+      const token = getRecoil(userAtom);
+      // console.log(token);
+      if (token?.token)
+        config.headers["Authorization"] = "Bearer " + token.token;
 
       return config;
     },

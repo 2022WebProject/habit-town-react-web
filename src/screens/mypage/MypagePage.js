@@ -1,42 +1,54 @@
 import { Col, Row } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import userPng from "images/pngs/user.png";
 import badgePng from "images/pngs/IcBadge.png";
 import { CardHabitBig } from "components";
+import { requestUesrInfo } from "apis/userApi";
 
 const MypagePage = () => {
   const navigate = useNavigate();
+
+  const [user, setUser] = useState();
+
+  const getUserInfo = async () => {
+    const result = await requestUesrInfo();
+    console.log(result);
+    setUser(result);
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   return (
     <Row>
       <Col span={1}></Col>
       <Col span={22}>
         <ProfileContainer>
-          <ProfileImage src={userPng} />
+          <ProfileImage src={"https://picsum.photos/200"} />
           <ProfileInfoWrapper>
             <ProfileText>
-              <span style={{ fontWeight: "700" }}>김유저</span>님의 페이지
+              <span style={{ fontWeight: "700" }}>{user?.nickname}</span>님의
+              페이지
             </ProfileText>
             <BadgeWrapper>
               <BadgeImage src={badgePng}>
-                <BadgeNumberText>3</BadgeNumberText>
+                <BadgeNumberText>{user?.success_quest_count}</BadgeNumberText>
               </BadgeImage>
-              <BadgeInfoText>{`3개의 습관을 지속했어요!`}</BadgeInfoText>
+              <BadgeInfoText>{`${user?.success_quest_count}개의 습관을 지속했어요!`}</BadgeInfoText>
             </BadgeWrapper>
           </ProfileInfoWrapper>
         </ProfileContainer>
         <Row gutter={16}>
-          <Col span={8}>
-            <CardHabitBig />
-          </Col>
-          <Col span={8}>
-            <CardHabitBig />
-          </Col>
-          <Col span={8}>
-            <CardHabitBig />
-          </Col>
+          {user?.accepted_quests?.map((item) => {
+            return (
+              <Col span={8}>
+                <CardHabitBig lists={item.sub_quests} />
+              </Col>
+            );
+          })}
         </Row>
       </Col>
       <Col span={1}></Col>

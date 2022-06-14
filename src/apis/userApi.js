@@ -10,7 +10,7 @@ export const loginRequest = async (email, password, exceptionControl) => {
   }
 };
 
-export const signupRequest = async (
+export const requestSignup = async (
   nickname,
   email,
   password,
@@ -28,3 +28,15 @@ export const signupRequest = async (
     throw e;
   }
 };
+
+export const requestUesrInfo = async (exceptionControl) => {
+  try {
+    const result = await getRequest("/user");
+    return result;
+  } catch (e) {
+    if (exceptionControl) exceptionControl(e);
+    throw e;
+  }
+};
+
+// 임시로 questAPI를 여기다가 적습니다..

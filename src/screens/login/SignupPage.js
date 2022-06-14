@@ -1,4 +1,4 @@
-import { signupRequest } from "apis/userApi";
+import { requestSignup } from "apis/userApi";
 import { ButtonM, InputM } from "components";
 import colors from "helpers/colors";
 import React, { useState } from "react";
@@ -30,14 +30,14 @@ const SignupPage = () => {
   };
 
   const postUserSignup = async () => {
-    const signUpRequestException = (e) => {
+    const requestSignupException = (e) => {
       alert(e.response?.data?.message);
     };
-    const result = await signupRequest(
+    const result = await requestSignup(
       nickname,
       email,
       password,
-      signUpRequestException
+      requestSignupException
     );
     return result;
   };

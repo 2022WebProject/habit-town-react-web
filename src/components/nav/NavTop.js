@@ -45,7 +45,10 @@ const NavTop = () => {
           {user ? (
             <>
               <ButtonM onClick={Logout} txtBtn text={"Log Out"} />
-              <ProfileImage onClick={goMyPage} src={userPng} />
+              <ProfileImage
+                onClick={goMyPage}
+                src={"https://picsum.photos/200"}
+              />
             </>
           ) : (
             <>

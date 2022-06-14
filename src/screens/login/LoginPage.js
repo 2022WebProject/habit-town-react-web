@@ -1,4 +1,4 @@
-import { loginRequest, signupRequest } from "apis/userApi";
+import { loginRequest, requestSignup } from "apis/userApi";
 import { ButtonM, InputM } from "components";
 import colors from "helpers/colors";
 import React, { useState } from "react";
@@ -15,7 +15,6 @@ const LoginPage = () => {
   const [user, setUser] = useRecoilState(userAtom);
 
   const handleEmail = (e) => {
-    console.log(e.target.value);
     setEmail(e.target.value);
   };
   const handlePassword = (e) => {
