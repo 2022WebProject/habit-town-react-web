@@ -27,7 +27,6 @@ export const instance = () => {
       // "Access-Control-Allow-Headers": "*",
     },
   });
-  console.log(ROOT_URL);
   instance.interceptors.request.use(
     function (config) {
       // 요청 바로 직전

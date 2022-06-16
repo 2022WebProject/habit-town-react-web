@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-const InputM = ({ title, value, onChange }) => {
+const InputM = ({ title, value, onChange, type = "text" }) => {
   return (
     <Container>
       {title && <TitleText>{title}</TitleText>}
-      <Input value={value} onChange={onChange && onChange} />
+      <Input value={value} type={type} onChange={onChange && onChange} />
     </Container>
   );
 };

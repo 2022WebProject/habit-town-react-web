@@ -39,7 +39,6 @@ const ModalHabitNew = ({ onExit, visible, refresh }) => {
       { title: secondHabit },
       { title: thirdHabit },
     ]);
-    console.log(result);
     onExit();
     refresh();
   };

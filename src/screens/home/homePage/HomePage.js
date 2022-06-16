@@ -35,13 +35,11 @@ const Home = () => {
 
   const getUserInfo = async () => {
     const result = await requestUesrInfo();
-    console.log(result);
     setUser(result);
   };
 
   const getAllQuest = async () => {
     const result = await requestAllQuests();
-    console.log(result);
     setQuest(result.data);
   };
 
@@ -55,7 +53,6 @@ const Home = () => {
       }
     };
     const result = await requestQuestAccept(id, acceptException);
-    console.log(result);
     alert(result.message);
     // console.log(result.message);
     getUserInfo();

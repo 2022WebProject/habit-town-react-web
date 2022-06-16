@@ -14,14 +14,11 @@ const MypagePage = () => {
 
   const getUserInfo = async () => {
     const result = await requestUesrInfo();
-    console.log(result);
     setUser(result);
   };
 
   const postQuitQuest = async (id) => {
-    console.log(id);
     const result = await requestQuestAccept(id);
-    console.log(result);
     alert("퀘스트를 때려치웠습니다.");
     getUserInfo();
   };

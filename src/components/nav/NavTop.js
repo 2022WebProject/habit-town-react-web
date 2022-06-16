@@ -29,7 +29,8 @@ const NavTop = () => {
 
   const Logout = () => {
     setUser(null);
-    navigate("/");
+    window.open("/", "_self");
+    // navigate("/");
   };
 
   return (

@@ -34,7 +34,6 @@ const LoginPage = () => {
   };
   const onClickLoginButton = async () => {
     const result = await postUserLogin();
-    console.log(result);
 
     setUser(result);
     navigate("/");
@@ -47,7 +46,12 @@ const LoginPage = () => {
         <SubTitleText>습관을 3단계로 쪼개기</SubTitleText>
         <InputM title="이메일" value={email} onChange={handleEmail} />
         <div style={{ height: 24 }} />
-        <InputM title="비밀번호" value={password} onChange={handlePassword} />
+        <InputM
+          title="비밀번호"
+          type="password"
+          value={password}
+          onChange={handlePassword}
+        />
         <ButtonM
           style={{ width: "100%", marginTop: 24 }}
           onClick={onClickLoginButton}

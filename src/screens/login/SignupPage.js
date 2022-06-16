@@ -57,7 +57,12 @@ const SignupPage = () => {
         <div style={{ height: 24 }} />
         <InputM title="이메일*" value={email} onChange={handleEmail} />
         <div style={{ height: 24 }} />
-        <InputM title="비밀번호*" value={password} onChange={handlePassword} />
+        <InputM
+          title="비밀번호*"
+          type={password}
+          value={password}
+          onChange={handlePassword}
+        />
         <ButtonM
           onClick={onCLickSignupButton}
           style={{ width: "100%", marginTop: 24 }}
