@@ -59,7 +59,7 @@ const SignupPage = () => {
         <div style={{ height: 24 }} />
         <InputM
           title="비밀번호*"
-          type={password}
+          type="password"
           value={password}
           onChange={handlePassword}
         />
