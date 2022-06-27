@@ -24,14 +24,16 @@ const CardHabitMy = ({ lists = tempList, onClick, cleared }) => {
           );
         })}
       </LineContainer>
-      <ButtonWrapper>
-        <ButtonM
-          bold
-          line={!cleared}
-          onClick={onClick && onClick}
-          text="친구들 진척도 보러 가기"
-        />
-      </ButtonWrapper>
+      {!cleared && (
+        <ButtonWrapper>
+          <ButtonM
+            bold
+            line
+            onClick={onClick && onClick}
+            text="친구들 진척도 보러 가기"
+          />
+        </ButtonWrapper>
+      )}
     </Container>
   );
 };

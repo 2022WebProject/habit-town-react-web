@@ -3,20 +3,25 @@ import styled from "styled-components";
 import userPng from "images/pngs/user.png";
 import { ReactComponent as IcCheck } from "images/svgs/Checkbox.svg";
 import { ReactComponent as IcCheckNone } from "images/svgs/IcCheckboxNone.svg";
+import moment from "moment";
 
-const ListUserProfile = () => {
+const ListUserProfile = ({ name = "name", accepted_time, modal }) => {
   return (
     <Container>
       <ProfileImage src={userPng} />
       <InfoWrapper>
         <NicknameWrapper>
-          <ProfileText style={{ marginRight: 8 }}>김유저</ProfileText>
-          <IcCheck />
-          <IcCheck />
-          <IcCheck />
+          <ProfileText style={{ marginRight: 8 }}>{name}</ProfileText>
+          {!modal && (
+            <>
+              <IcCheck />
+              <IcCheck />
+              <IcCheck />
+            </>
+          )}
         </NicknameWrapper>
         <ProfileText style={{ fontWeight: "500", marginTop: 4 }}>
-          17일 째 함께하는중
+          {moment().diff(moment(accepted_time), "days")}일 째 함께하는중
         </ProfileText>
       </InfoWrapper>
     </Container>

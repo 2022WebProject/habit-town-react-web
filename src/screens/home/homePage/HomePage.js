@@ -20,6 +20,7 @@ const Home = () => {
   const [user, setUser] = useState();
   const [quest, setQuest] = useState([]);
   const [clearedQuests, setClearedQuests] = useState([]);
+  const [selectedQuest, setSelectedQuest] = useState();
 
   const goLoginPage = () => {
     navigate("/login");
@@ -67,6 +68,11 @@ const Home = () => {
     getAllQuest();
   };
 
+  const onClickQuestOpenModal = (item) => {
+    setVisible(true);
+    setSelectedQuest(item);
+  };
+
   useEffect(() => {
     getUserInfo();
     getAllQuest();
@@ -100,7 +106,7 @@ const Home = () => {
             {clearedQuests?.map((item) => {
               return (
                 <CardContainer
-                  onClick={() => setVisible(true)}
+                  onClick={() => onClickQuestOpenModal(item)}
                   my
                   cleared
                   lists={item.sub_quests}
@@ -110,7 +116,7 @@ const Home = () => {
             {user?.accepted_quests?.map((item) => {
               return (
                 <CardContainer
-                  onClick={() => setVisible(true)}
+                  onClick={() => onClickQuestOpenModal(item)}
                   my
                   lists={item.sub_quests}
                 />
@@ -127,7 +133,12 @@ const Home = () => {
           </Row>
         </Col>
         <Col span={5} xs={1} sm={2} md={13} lg={3} xxl={5}></Col>
-        <ModalHabitMore visible={visible} onExit={() => setVisible(false)} />
+        <ModalHabitMore
+          lists={selectedQuest?.sub_quests}
+          quest={selectedQuest}
+          visible={visible}
+          onExit={() => setVisible(false)}
+        />
       </Row>
     </div>
   );

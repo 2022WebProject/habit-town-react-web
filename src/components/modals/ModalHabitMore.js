@@ -1,9 +1,17 @@
 import colors from "helpers/colors";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Checkbox } from "images/svgs/IcCheckboxWhite.svg";
+import { ReactComponent as CheckboxNone } from "images/svgs/IcCheckboxWhiteNone.svg";
+
 import ListUserProfile from "components/lists/ListUserProfile";
 import { ReactComponent as IcCross } from "images/svgs/IcCross.svg";
+import moment from "moment";
+import { Col, Row } from "antd";
+import { requestGetQuestInfo, requestPostMemoEdit } from "apis/questApi";
+import { useRecoilState } from "recoil";
+import { userAtom } from "store/atom/userAtom";
+import InputM from "components/inputs/InputM";
 
 const tempList = [
   { title: "1단계 습관" },
@@ -11,7 +19,43 @@ const tempList = [
   { title: "3단계 습관" },
 ];
 
-const ModalHabitMore = ({ lists = tempList, onExit, visible }) => {
+const ModalHabitMore = ({ lists = tempList, onExit, visible, quest }) => {
+  const [questInfo, setQuestInfo] = useState({});
+  const [user] = useRecoilState(userAtom);
+
+  const [isEdit, setIsEdit] = useState(false);
+
+  const [memoText, setMemoText] = useState("");
+  const [memo, setMemo] = useState("");
+
+  const getQuestInfo = async () => {
+    const result = await requestGetQuestInfo(quest._id);
+    console.log(result);
+    setQuestInfo(result.data);
+  };
+
+  const onClickEdit = () => {
+    if (isEdit) {
+      setIsEdit(false);
+      onClickEditComplete();
+      setMemo(memoText);
+      setMemoText("");
+    } else {
+      setIsEdit(true);
+      setMemoText(memo || quest.memo);
+    }
+  };
+
+  const onClickEditComplete = async () => {
+    const result = await requestPostMemoEdit(quest._id, memoText);
+    console.log(result);
+  };
+
+  useEffect(() => {
+    getQuestInfo();
+    console.log("quest", quest);
+  }, [quest]);
+
   if (!visible) return null;
   return (
     <ModalContainer>
@@ -24,42 +68,57 @@ const ModalHabitMore = ({ lists = tempList, onExit, visible }) => {
             {lists.map((list, index) => {
               return (
                 <LineWrapper key={index}>
-                  <Checkbox />
-                  <HabitText>{list.title}</HabitText>
+                  {index + 2 <= quest.status ? <Checkbox /> : <CheckboxNone />}
+                  <HabitText isBold={index + 1 == quest.status}>
+                    {list.title}
+                  </HabitText>
                 </LineWrapper>
               );
             })}
           </HabitContainer>
           <DayContainer>
-            <DDAYText>D+17</DDAYText>
-            <StartDayText>2022년 2월 6일 ~</StartDayText>
+            <DDAYText>
+              D+{moment().diff(moment(quest.accepted_time), "days")}
+            </DDAYText>
+            <StartDayText>
+              {moment(quest.accepted_time).format("YYYY년 MM월 DD일")} ~
+            </StartDayText>
           </DayContainer>
         </HabitInfoContainer>
         <MyProfileContainer>
-          <ListUserProfile />
-          <SubText>여러분 전 못하겠어요</SubText>
+          <ListUserProfile
+            name={user.nickname}
+            accepted_time={quest.accepted_time}
+            modal
+          />
+          {isEdit ? (
+            <InputM
+              style={{ width: 200 }}
+              value={memoText}
+              onChange={(e) => setMemoText(e.target.value)}
+            />
+          ) : (
+            <SubText>{memo || quest?.memo || "메모가 없어요"}</SubText>
+          )}
+          <EditText onClick={onClickEdit}>{isEdit ? "완료" : "수정"}</EditText>
         </MyProfileContainer>
         <Line />
-        <OtherProfileContainer>
-          <OtherProfileWrapper>
-            <ListUserProfile />
-            <SubTextOther>여러분 전 못하겠어요</SubTextOther>
-          </OtherProfileWrapper>
-          <OtherProfileWrapper>
-            <ListUserProfile />
-            <SubTextOther>여러분 전 못하겠어요</SubTextOther>
-          </OtherProfileWrapper>
-        </OtherProfileContainer>
-        <OtherProfileContainer>
-          <OtherProfileWrapper>
-            <ListUserProfile />
-            <SubTextOther>여러분 전 못하겠어요</SubTextOther>
-          </OtherProfileWrapper>
-          <OtherProfileWrapper>
-            <ListUserProfile />
-            <SubTextOther>여러분 전 못하겠어요</SubTextOther>
-          </OtherProfileWrapper>
-        </OtherProfileContainer>
+        <Row>
+          {questInfo?.accepted_users?.map((item) => {
+            return (
+              <Col span={12}>
+                <OtherProfileWrapper>
+                  <ListUserProfile
+                    name={item?.user.nickname}
+                    accepted_time={item.accepted_time}
+                    modal
+                  />
+                  <SubTextOther>{item.memo || "메모가 없어요"}</SubTextOther>
+                </OtherProfileWrapper>
+              </Col>
+            );
+          })}
+        </Row>
       </Container>
     </ModalContainer>
   );
@@ -84,6 +143,8 @@ const Container = styled.div`
   padding: 24px;
   background-color: ${colors.white};
   position: relative;
+  min-width: 600px;
+  max-width: 640px;
 `;
 
 const HabitInfoContainer = styled.div`
@@ -111,7 +172,7 @@ const LineWrapper = styled.div`
 `;
 
 const HabitText = styled.div`
-  font-weight: 700;
+  font-weight: ${({ isBold }) => (isBold ? "800" : "400")};
   font-size: 16px;
   line-height: 24px;
   margin-left: 12px;
@@ -196,5 +257,15 @@ const CrossWrapper = styled.div`
   position: absolute;
   top: 0px;
   right: 0px;
+  cursor: pointer;
+`;
+
+const EditText = styled.div`
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: ${colors.primary};
   cursor: pointer;
 `;

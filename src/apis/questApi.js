@@ -60,11 +60,22 @@ export const requestClearedQuests = async (exceptionControl) => {
   }
 };
 
-// 퀘스트 목록 불러오기(검색)
+export const requestGetQuestInfo = async (quest_id, exceptionControl) => {
+  try {
+    const result = await getRequest(`/quest/${quest_id}`);
+    return result;
+  } catch (e) {
+    if (exceptionControl) exceptionControl(e);
+    throw e;
+  }
+};
 
-// // 퀘스트 정보 불러오기
-// GET /quest/:id
-
-// ## 퀘스트 수락하기
-
-// ### POST /quest
+export const requestPostMemoEdit = async (quest_id, memo, exceptionControl) => {
+  try {
+    const result = await postRequest(`/quest/memo`, { quest_id, memo });
+    return result;
+  } catch (e) {
+    if (exceptionControl) exceptionControl(e);
+    throw e;
+  }
+};

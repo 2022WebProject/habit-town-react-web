@@ -48,9 +48,9 @@ const MypagePage = () => {
             </ProfileText>
             <BadgeWrapper>
               <BadgeImage src={badgePng}>
-                <BadgeNumberText>{user?.success_quest_count}</BadgeNumberText>
+                <BadgeNumberText>{user?.cleared_quests.length}</BadgeNumberText>
               </BadgeImage>
-              <BadgeInfoText>{`${user?.success_quest_count}개의 습관을 지속했어요!`}</BadgeInfoText>
+              <BadgeInfoText>{`${user?.cleared_quests.length}개의 습관을 지속했어요!`}</BadgeInfoText>
             </BadgeWrapper>
           </ProfileInfoWrapper>
         </ProfileContainer>
