@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { PROGRESS_STATUS } from "helpers/status";
 import { ReactComponent as Checkbox } from "images/svgs/Checkbox.svg";
+import { ReactComponent as CheckboxNone } from "images/svgs/IcCheckboxNone.svg";
 import { ReactComponent as IcMore } from "images/svgs/IcMore.svg";
 import { Dropdown, Menu } from "antd";
 
@@ -13,8 +14,14 @@ const tempList = [
   { title: "3단계 습관" },
 ];
 
-const CardHabitBig = ({ lists = tempList, onClick, onClickQuit }) => {
-  const [status, setStatus] = useState([]);
+const CardHabitBig = ({
+  lists = tempList,
+  onClick,
+  onClickQuit,
+  status = [],
+  isCleared = false,
+  questNum,
+}) => {
   const menu = (
     <Menu
       items={[
@@ -35,23 +42,6 @@ const CardHabitBig = ({ lists = tempList, onClick, onClickQuit }) => {
     />
   );
 
-  useEffect(() => {
-    let tempStatus = [];
-    for (let i = 0; i < 10; i++) {
-      tempStatus.push({ state: PROGRESS_STATUS.COMPLETED });
-    }
-    for (let i = 0; i < 5; i++) {
-      tempStatus.push({ state: PROGRESS_STATUS.FAILED });
-    }
-    for (let i = 0; i < 5; i++) {
-      tempStatus.push({ state: PROGRESS_STATUS.COMPLETED });
-    }
-    for (let i = 0; i < 10; i++) {
-      tempStatus.push({ state: PROGRESS_STATUS.NOT_STARTED });
-    }
-    setStatus(tempStatus);
-  }, []);
-
   return (
     <Container>
       <MoreWrapper>
@@ -63,7 +53,7 @@ const CardHabitBig = ({ lists = tempList, onClick, onClickQuit }) => {
         {lists.map((list, index) => {
           return (
             <LineWrapper key={index}>
-              <Checkbox />
+              {index + 1 <= questNum ? <Checkbox /> : <CheckboxNone />}
               <HabitText>{list.title}</HabitText>
             </LineWrapper>
           );
@@ -72,9 +62,17 @@ const CardHabitBig = ({ lists = tempList, onClick, onClickQuit }) => {
 
       <CalendarWrapper>
         {status.map((item) => {
-          return <ColorCard state={item.state} />;
+          return <ColorCard state={item} />;
         })}
       </CalendarWrapper>
+      <ButtonWrapper>
+        <ButtonM
+          bold
+          line={isCleared}
+          onClick={!isCleared && onClick && onClick}
+          text={isCleared ? "오늘은 완료!!" : "완료하기"}
+        />
+      </ButtonWrapper>
     </Container>
   );
 };
@@ -141,4 +139,8 @@ const MoreWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   cursor: pointer;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 24px;
 `;

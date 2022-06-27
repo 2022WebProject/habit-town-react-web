@@ -5,11 +5,8 @@ import { useNavigate } from "react-router-dom";
 import CardContainer from "./components/CardContainer";
 import { ButtonM, ModalHabitMore, ModalHabitNew } from "components/index";
 import styled from "styled-components";
-import {
-  requestAllQuests,
-  requestQuestAccept,
-  requestUesrInfo,
-} from "apis/userApi";
+import { requestUesrInfo } from "apis/userApi";
+import { requestQuestAccept, requestAllQuests } from "apis/questApi";
 
 const Home = () => {
   const navigate = useNavigate();

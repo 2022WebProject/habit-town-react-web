@@ -5,7 +5,8 @@ import styled from "styled-components";
 import userPng from "images/pngs/user.png";
 import badgePng from "images/pngs/IcBadge.png";
 import { CardHabitBig } from "components";
-import { requestQuestAccept, requestUesrInfo } from "apis/userApi";
+import { requestUesrInfo } from "apis/userApi";
+import { requestClearQuest, requestQuestAccept } from "apis/questApi";
 
 const MypagePage = () => {
   const navigate = useNavigate();
@@ -14,12 +15,19 @@ const MypagePage = () => {
 
   const getUserInfo = async () => {
     const result = await requestUesrInfo();
+    console.log(result);
     setUser(result);
   };
 
   const postQuitQuest = async (id) => {
     const result = await requestQuestAccept(id);
     alert("퀘스트를 때려치웠습니다.");
+    getUserInfo();
+  };
+
+  const postClearQuest = async (id) => {
+    const result = await requestClearQuest(id);
+    alert("퀘스트를 완료했습니다.");
     getUserInfo();
   };
 
@@ -53,6 +61,10 @@ const MypagePage = () => {
                 <CardHabitBig
                   onClickQuit={() => postQuitQuest(item._id)}
                   lists={item.sub_quests}
+                  questNum={item.status}
+                  status={item.progress}
+                  isCleared={item.is_cleared}
+                  onClick={() => postClearQuest(item._id)}
                 />
               </Col>
             );
