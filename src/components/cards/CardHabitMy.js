@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { ReactComponent as Checkbox } from "images/svgs/IcCheckboxWhite.svg";
 import { Modal } from "antd";
+import colors from "helpers/colors";
 
 const tempList = [
   { title: "1단계 습관" },
@@ -10,9 +11,9 @@ const tempList = [
   { title: "3단계 습관" },
 ];
 
-const CardHabitMy = ({ lists = tempList, onClick }) => {
+const CardHabitMy = ({ lists = tempList, onClick, cleared }) => {
   return (
-    <Container>
+    <Container cleared={cleared}>
       <LineContainer>
         {lists.map((list, index) => {
           return (
@@ -26,7 +27,7 @@ const CardHabitMy = ({ lists = tempList, onClick }) => {
       <ButtonWrapper>
         <ButtonM
           bold
-          line
+          line={!cleared}
           onClick={onClick && onClick}
           text="친구들 진척도 보러 가기"
         />
@@ -38,7 +39,7 @@ const CardHabitMy = ({ lists = tempList, onClick }) => {
 export default CardHabitMy;
 
 const Container = styled.div`
-  background: #22c55e;
+  background: ${({ cleared }) => (cleared ? colors.gray500 : "#22c55e")};
   box-shadow: 0px 1px 2px rgba(85, 105, 135, 0.1);
   border-radius: 6px;
   padding: 40px 32px;

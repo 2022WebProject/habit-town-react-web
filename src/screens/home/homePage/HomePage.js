@@ -6,7 +6,11 @@ import CardContainer from "./components/CardContainer";
 import { ButtonM, ModalHabitMore, ModalHabitNew } from "components/index";
 import styled from "styled-components";
 import { requestUesrInfo } from "apis/userApi";
-import { requestQuestAccept, requestAllQuests } from "apis/questApi";
+import {
+  requestQuestAccept,
+  requestAllQuests,
+  requestClearedQuests,
+} from "apis/questApi";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,6 +19,7 @@ const Home = () => {
 
   const [user, setUser] = useState();
   const [quest, setQuest] = useState([]);
+  const [clearedQuests, setClearedQuests] = useState([]);
 
   const goLoginPage = () => {
     navigate("/login");
@@ -40,6 +45,12 @@ const Home = () => {
     setQuest(result.data);
   };
 
+  const getClearedQuest = async () => {
+    const result = await requestClearedQuests();
+    console.log("cleared quest", result);
+    setClearedQuests(result.data);
+  };
+
   const onClickAccept = async (id) => {
     const acceptException = (e) => {
       if (e?.response?.status == 401) {
@@ -59,6 +70,7 @@ const Home = () => {
   useEffect(() => {
     getUserInfo();
     getAllQuest();
+    getClearedQuest();
   }, []);
 
   return (
@@ -85,6 +97,16 @@ const Home = () => {
             />
           </MoreButtonContainer>
           <Row gutter={[40, 40]}>
+            {clearedQuests?.map((item) => {
+              return (
+                <CardContainer
+                  onClick={() => setVisible(true)}
+                  my
+                  cleared
+                  lists={item.sub_quests}
+                />
+              );
+            })}
             {user?.accepted_quests?.map((item) => {
               return (
                 <CardContainer

@@ -7,6 +7,7 @@ import { ReactComponent as Checkbox } from "images/svgs/Checkbox.svg";
 import { ReactComponent as CheckboxNone } from "images/svgs/IcCheckboxNone.svg";
 import { ReactComponent as IcMore } from "images/svgs/IcMore.svg";
 import { Dropdown, Menu } from "antd";
+import colors from "helpers/colors";
 
 const tempList = [
   { title: "1단계 습관" },
@@ -53,8 +54,8 @@ const CardHabitBig = ({
         {lists.map((list, index) => {
           return (
             <LineWrapper key={index}>
-              {index + 1 <= questNum ? <Checkbox /> : <CheckboxNone />}
-              <HabitText>{list.title}</HabitText>
+              {index + 2 <= questNum ? <Checkbox /> : <CheckboxNone />}
+              <HabitText isBold={index + 1 == questNum}>{list.title}</HabitText>
             </LineWrapper>
           );
         })}
@@ -111,11 +112,11 @@ const CalendarContainer = styled.div`
 `;
 
 const HabitText = styled.div`
-  font-weight: 700;
+  font-weight: ${({ isBold }) => (isBold ? "800" : "600")};
   font-size: 16px;
   line-height: 24px;
   margin-left: 12px;
-  color: #556987;
+  color: ${({ isBold }) => (isBold ? colors.gray600 : colors.gray400)};
 `;
 
 const ColorCard = styled.div`

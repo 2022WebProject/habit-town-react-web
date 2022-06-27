@@ -50,6 +50,16 @@ export const requestClearQuest = async (quest_id, exceptionControl) => {
   }
 };
 
+export const requestClearedQuests = async (exceptionControl) => {
+  try {
+    const result = await getRequest(`/quest/cleared`);
+    return result;
+  } catch (e) {
+    if (exceptionControl) exceptionControl(e);
+    throw e;
+  }
+};
+
 // 퀘스트 목록 불러오기(검색)
 
 // // 퀘스트 정보 불러오기

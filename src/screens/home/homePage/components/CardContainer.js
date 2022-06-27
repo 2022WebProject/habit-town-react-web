@@ -2,11 +2,15 @@ import { Col } from "antd";
 import { CardHabit, CardHabitMy } from "components/index";
 import React from "react";
 
-const CardContainer = ({ my, onClick, lists }) => {
+const CardContainer = ({ my, onClick, lists, cleared }) => {
   return (
     <Col span={8}>
       {my ? (
-        <CardHabitMy lists={lists} onClick={onClick && onClick} />
+        <CardHabitMy
+          cleared={cleared}
+          lists={lists}
+          onClick={onClick && onClick}
+        />
       ) : (
         <CardHabit lists={lists} onClick={onClick && onClick} />
       )}
